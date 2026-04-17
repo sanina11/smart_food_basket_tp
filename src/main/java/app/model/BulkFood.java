@@ -1,0 +1,30 @@
+package app.model;
+
+public class BulkFood extends FoodItem {
+    private final double selectedWeight;
+
+    public BulkFood(String name, FoodGroup group, double basePrice, double baseCalories, double selectedWeight){
+        super(name, group, basePrice, baseCalories);
+        this.selectedWeight = selectedWeight;
+    }
+
+    @Override
+    public double getPrice(){
+        return (this.getBasePrice() / 1000.0) * this.selectedWeight;
+    }
+
+    @Override
+    public double getCalories(){
+        return (this.getBaseCalories() / 100.0) * this.selectedWeight;
+    }
+
+    @Override
+    public double getWeightInGrams(){
+        return this.selectedWeight;
+    }
+
+    public double getSelectedWeight(){
+        return this.selectedWeight;
+    }
+
+}
