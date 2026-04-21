@@ -5,8 +5,8 @@ public class PackagedFood extends FoodItem {
     private final String packagingMaterial;
 
     public PackagedFood(String name, FoodGroup group, double basePrice,
-                        double baseCalories, String packagingMaterial) {
-        super(name, group, basePrice, baseCalories);
+                        double baseCalories, String packagingMaterial, String imagePath) {
+        super(name, group, basePrice, baseCalories, imagePath);
         this.packagingMaterial = packagingMaterial;
     }
 

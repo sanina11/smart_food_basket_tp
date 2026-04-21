@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import app.ui.View;
-
+import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class Model {
@@ -90,15 +92,16 @@ public class Model {
                 double price = Double.parseDouble(parts[3]);
                 double calories = Double.parseDouble(parts[4]);
                 String extra = parts[5];
+                String imagePath = parts[6];
 
                 if (price < 0 || calories < 0) {
                     throw new IllegalArgumentException();
                 }
 
                 if (type.equals("PACKAGED")) {
-                    this.catalog.add(new PackagedFood(name, group, price, calories, extra));
+                    this.catalog.add(new PackagedFood(name, group, price, calories, extra, imagePath));
                 } else if (type.equals("BULK")) {
-                    this.catalog.add(new BulkFood(name, group, price, calories, 0.0));
+                    this.catalog.add(new BulkFood(name, group, price, calories, 0.0,imagePath));
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -117,5 +120,40 @@ public class Model {
 
     public void setView(View view) {
         this.view = view;
+    }
+
+    public String exportReceipt() throws IOException {
+        String fileName = "receipt_" + this.getTodayDate() + ".txt";
+        FileWriter writer = new FileWriter(fileName);
+
+        writer.write("=== Smart Food Basket ===\n");
+        writer.write("Data: " + this.getTodayDate() + "\n\n");
+
+        for (FoodItem item : this.items) {
+            writer.write(this.formatReceiptLine(item));
+        }
+
+        writer.write("\n");
+        writer.write(String.format("GRANDE TOTAL: %.2f EUR\n", this.getTotalPrice()));
+        writer.write("\n");
+
+        if (this.hasMetVegetableGoal()) {
+            writer.write("Meta ODS 3 Cumprida!\n");
+        } else {
+            writer.write("Meta ODS 3 Falhada!\n");
+        }
+
+        writer.close();
+        return fileName;
+    }
+
+    private String getTodayDate() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+
+    private String formatReceiptLine(FoodItem item) {
+        double weight = item.getWeightInGrams();
+        String quantity = weight > 0 ? (int) weight + "g" : "1 un.";
+        return String.format("%-20s %-8s %6.2f EUR%n", item.getName(), quantity, item.getPrice());
     }
 }

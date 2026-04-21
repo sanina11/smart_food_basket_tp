@@ -5,12 +5,14 @@ public abstract class FoodItem {
     private final FoodGroup group;
     private final double basePrice;
     private final double baseCalories;
+    private final String imagePath;
 
-    public FoodItem(String name, FoodGroup group, double basePrice, double baseCalories){
+    public FoodItem(String name, FoodGroup group, double basePrice, double baseCalories, String imagePath){
         this.name = name;
         this.group = group;
         this.basePrice= basePrice;
         this.baseCalories = baseCalories;
+        this.imagePath = imagePath;
     }
 
     public abstract double getPrice();
@@ -36,4 +38,6 @@ public abstract class FoodItem {
     public double getBaseCalories() {
         return this.baseCalories;
     }
+
+    public String getImagePath() { return this.imagePath;}
 }

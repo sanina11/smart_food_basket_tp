@@ -15,6 +15,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextInputDialog;
 import java.util.Optional;
 import java.io.IOException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+
 
 public class HelloApplication extends Application implements View {
 
@@ -23,6 +28,7 @@ public class HelloApplication extends Application implements View {
     private VBox sidebar;
     private Label totalPriceLabel;
     private Label totalCaloriesLabel;
+    private ListView<String> basketList;
 
     @Override
     public void start(Stage stage) {
@@ -35,7 +41,7 @@ public class HelloApplication extends Application implements View {
 
     private void loadData() {
         try {
-            this.model.loadFromCsv("src/main/resources/foods.csv");
+            this.model.loadFromCsv("src/main/resources/foods_large.csv");
         } catch (IOException e) {
             this.showError("Erro ao carregar o ficheiro: " + e.getMessage());
         }
@@ -78,14 +84,68 @@ public class HelloApplication extends Application implements View {
         this.totalPriceLabel = new Label("Custo total: 0.00 €");
         this.totalCaloriesLabel = new Label("Calorias: 0 kcal");
 
-        box.getChildren().addAll(title, this.totalPriceLabel, this.totalCaloriesLabel);
+        Label basketTitle = new Label("Cabaz");
+        basketTitle.setStyle("-fx-font-size: 11px; -fx-text-fill: #888; -fx-font-weight: bold; -fx-padding: 10 0 0 0;");
+
+        this.basketList = new ListView<>();
+        this.basketList.setPrefHeight(300);
+        this.basketList.setStyle("-fx-font-size: 12px;");
+
+        Button checkoutButton = this.createCheckoutButton();
+
+        box.getChildren().addAll(
+                title,
+                this.totalPriceLabel,
+                this.totalCaloriesLabel,
+                basketTitle,
+                this.basketList,
+                checkoutButton
+        );
         return box;
+    }
+
+    private Button createCheckoutButton() {
+        Button button = new Button("Finalizar compra");
+        button.setMaxWidth(Double.MAX_VALUE);
+        button.setStyle(
+                "-fx-background-color: #185FA5;" +
+                        "-fx-text-fill: white;" +
+                        "-fx-font-size: 13px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-padding: 10;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-cursor: hand;"
+        );
+        button.setOnAction(e -> this.handleCheckout());
+        return button;
+    }
+
+    private void handleCheckout() {
+        if (this.model.getItems().isEmpty()) {
+            this.showError("O cabaz está vazio!");
+            return;
+        }
+
+        try {
+            String fileName = this.model.exportReceipt();
+            this.showInfo("Recibo gerado: " + fileName);
+        } catch (IOException e) {
+            this.showError("Erro ao gerar recibo: " + e.getMessage());
+        }
+    }
+
+    private void showInfo(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Compra finalizada");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @Override
     public void updateView() {
         this.totalPriceLabel.setText(String.format("Custo total: %.2f €", this.model.getTotalPrice()));
         this.totalCaloriesLabel.setText(String.format("Calorias: %.0f kcal", this.model.getTotalCalories()));
+        this.refreshBasketList();
     }
 
     @Override
@@ -113,8 +173,7 @@ public class HelloApplication extends Application implements View {
                         "-fx-cursor: hand;"
         );
 
-        Label emoji = new Label(item.getGroup().getEmoji());
-        emoji.setStyle("-fx-font-size: 28px; -fx-font-family: 'Segoe UI Emoji';");
+        ImageView imageView = this.loadFoodImage(item);
 
         Label name = new Label(item.getName());
         name.setStyle("-fx-font-size: 11px; -fx-font-weight: bold;");
@@ -122,7 +181,7 @@ public class HelloApplication extends Application implements View {
         Label price = new Label(String.format("%.2f %s", item.getBasePrice(), item.getUnitLabel()));
         price.setStyle("-fx-font-size: 10px; -fx-text-fill: #555;");
 
-        tile.getChildren().addAll(emoji, name, price);
+        tile.getChildren().addAll(imageView, name, price);
 
         tile.setOnMouseClicked(e -> this.handleTileClick(item));
 
@@ -154,12 +213,47 @@ public class HelloApplication extends Application implements View {
             BulkFood bulk = new BulkFood(
                     item.getName(), item.getGroup(),
                     item.getBasePrice(), item.getBaseCalories(),
-                    grams
+                    grams, ""
             );
             this.model.addItem(bulk);
         } catch (NumberFormatException e) {
             this.showError("Peso inválido: " + response.get());
         }
+    }
+
+    private ImageView loadFoodImage(FoodItem item) {
+        String path = "/emojis/" + item.getImagePath();
+        try {
+            Image image = new Image(this.getClass().getResourceAsStream(path));
+            ImageView view = new ImageView(image);
+            view.setFitWidth(48);
+            view.setFitHeight(48);
+            view.setPreserveRatio(true);
+            return view;
+        } catch (Exception e) {
+            return new ImageView();
+        }
+    }
+
+    private void refreshBasketList() {
+        this.basketList.getItems().clear();
+        for (FoodItem item : this.model.getItems()) {
+            String line = this.formatBasketLine(item);
+            this.basketList.getItems().add(line);
+        }
+    }
+
+    private String formatBasketLine(FoodItem item) {
+        String quantity = this.formatQuantity(item);
+        return String.format("%s %s · %.2f €", item.getName(), quantity, item.getPrice());
+    }
+
+    private String formatQuantity(FoodItem item) {
+        double weight = item.getWeightInGrams();
+        if (weight > 0) {
+            return "(" + (int) weight + "g)";
+        }
+        return "×1";
     }
 
     public static void main(String[] args) {

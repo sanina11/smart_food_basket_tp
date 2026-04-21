@@ -3,8 +3,8 @@ package app.model;
 public class BulkFood extends FoodItem {
     private final double selectedWeight;
 
-    public BulkFood(String name, FoodGroup group, double basePrice, double baseCalories, double selectedWeight){
-        super(name, group, basePrice, baseCalories);
+    public BulkFood(String name, FoodGroup group, double basePrice, double baseCalories, double selectedWeight, String imagePath){
+        super(name, group, basePrice, baseCalories, imagePath);
         this.selectedWeight = selectedWeight;
     }
 
