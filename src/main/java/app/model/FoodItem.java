@@ -15,6 +15,7 @@ public abstract class FoodItem {
 
     public abstract double getPrice();
     public abstract double getCalories();
+    public abstract String getUnitLabel();
 
     public double getWeightInGrams(){
         return 0.0;

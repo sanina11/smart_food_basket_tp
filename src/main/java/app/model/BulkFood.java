@@ -27,4 +27,8 @@ public class BulkFood extends FoodItem {
         return this.selectedWeight;
     }
 
+    @Override
+    public String getUnitLabel() {
+        return "€/kg.";
+    }
 }

@@ -24,6 +24,10 @@ public class PackagedFood extends FoodItem {
         return this.packagingMaterial;
     }
 
+    @Override
+    public String getUnitLabel() {
+        return "€/un.";
+    }
 }
 
 
