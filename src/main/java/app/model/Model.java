@@ -1,5 +1,7 @@
 package app.model;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,12 +17,16 @@ public class Model {
     private final List<FoodItem> catalog;
     private final List<FoodItem> items;
     private final List<String> errorLines;
+    private final Deque<FoodItem> undoStack;
+    private final Deque<FoodItem> redoStack;
     private View view;
 
     public Model (){
         this.catalog = new ArrayList<>();
         this.items = new ArrayList<>();
         this.errorLines = new ArrayList<>();
+        this.undoStack = new ArrayDeque<>();
+        this.redoStack = new ArrayDeque<>();
     }
 
     public List<FoodItem> getCatalog() {
@@ -28,18 +34,33 @@ public class Model {
     }
 
     public void addItem(FoodItem item){
+        this.redoStack.clear();
         this.items.add(item);
         if (this.view != null){
             this.view.updateView();
         }
     }
 
-    public void removeLastItem(){
-        if (!this.items.isEmpty()){
-             this.items.remove(this.items.size() - 1);
-            if (this.view != null){
+    public void undo(){
+        if (this.items.isEmpty()){
+            return;
+        }
+        FoodItem removed = this.items.remove(this.items.size() - 1);
+        this.undoStack.push(removed);
+        if (this.view != null){
+            this.view.updateView();
+        }
+    }
+
+    public void redo(){
+        if (this.undoStack.isEmpty()){
+            return;
+        }
+        FoodItem item = this.undoStack.pop();
+        this.items.add(item);
+        this.redoStack.push(item);
+        if (this.view != null){
                 this.view.updateView();
-            }
         }
     }
 

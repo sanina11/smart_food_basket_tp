@@ -56,7 +56,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                .po2.javafxpo2template/.app.ui.HelloApplication
+                                .po2.javafxpo2template/.app.ui.SmartFoodBasketApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

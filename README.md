@@ -226,12 +226,7 @@ Linhas com erros de formato são automaticamente rejeitadas e reportadas ao util
 
 ---
 
-## 👥 Autores
+##Autores
 
 Desenvolvido por alunos do **2.º ano** da Licenciatura em Engenharia Informática da Escola Superior de Tecnologia e Gestão do Instituto Politécnico de Beja, no âmbito da Unidade Curricular de **Programação Orientada por Objetos**.
 
----
-
-## 📜 Licença
-
-Projeto académico desenvolvido para fins educativos no âmbito da unidade curricular de Programação Orientada por Objetos — IPBeja, 2025/2026.
