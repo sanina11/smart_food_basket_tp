@@ -1,0 +1,20 @@
+PACKAGED,Arroz,YELLOW,1.89,350.0,Cartao,rice.png
+PACKAGED,Pao integral,YELLOW,1.20,247.0,Papel,bread.png
+PACKAGED,Aveia,YELLOW,2.10,389.0,Cartao,oats.png
+PACKAGED,Massa,YELLOW,0.99,371.0,Plastico,pasta.png
+PACKAGED,Leite,BLUE,0.79,42.0,Plastico,milk.png
+PACKAGED,Queijo,BLUE,2.50,356.0,Plastico,cheese.png
+PACKAGED,Iogurte,BLUE,1.30,59.0,Plastico,yogurt.png
+PACKAGED,Manteiga,BLUE,2.80,717.0,Cartao,butter.png
+PACKAGED,Ovos,RED,1.99,155.0,Cartao,eggs.png
+PACKAGED,Atum enlatado,RED,1.45,184.0,Metal,tuna.png
+PACKAGED,Azeite,ORANGE,4.99,884.0,Vidro,olive_oil.png
+PACKAGED,Chocolate,ORANGE,2.20,546.0,Plastico,chocolate.png
+BULK,Brocolos,GREEN,1.20,34.0,-,broccoli.png
+BULK,Maca,GREEN,1.50,52.0,-,apple.png
+BULK,Cenoura,GREEN,0.90,41.0,-,carrot.png
+BULK,Laranja,GREEN,1.10,47.0,-,orange.png
+BULK,Alface,GREEN,0.80,15.0,-,lettuce.png
+BULK,Feijao,BROWN,1.80,333.0,-,beans.png
+BULK,Lentilhas,BROWN,2.20,116.0,-,lentils.png
+BULK,Salmao,RED,9.50,208.0,-,salmon.png

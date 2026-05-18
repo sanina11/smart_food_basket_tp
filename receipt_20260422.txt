@@ -1,0 +1,14 @@
+=== Smart Food Basket ===
+Data: 20260422
+
+Cenoura              976g       0,88 EUR
+Fiambre              1 un.      2,30 EUR
+Atum enlatado        1 un.      1,45 EUR
+Atum enlatado        1 un.      1,45 EUR
+Atum enlatado        1 un.      1,45 EUR
+Iogurte              1 un.      1,30 EUR
+Mel                  1 un.      5,50 EUR
+
+GRANDE TOTAL: 14,33 EUR
+
+Meta ODS 3 Cumprida!

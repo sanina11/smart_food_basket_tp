@@ -1,0 +1,35 @@
+PACKAGED,Arroz,YELLOW,1.89,350.0,Cartao,rice.png
+PACKAGED,Pao integral,YELLOW,1.20,247.0,Papel,bread.png
+PACKAGED,Aveia,YELLOW,2.10,389.0,Cartao,oats.png
+PACKAGED,Massa,YELLOW,0.99,371.0,Plastico,pasta.png
+PACKAGED,Bolachas,YELLOW,1.75,450.0,Plastico,cookies.png
+PACKAGED,Leite,BLUE,0.79,42.0,Plastico,milk.png
+PACKAGED,Queijo,BLUE,2.50,356.0,Plastico,cheese.png
+PACKAGED,Iogurte,BLUE,1.30,59.0,Plastico,yogurt.png
+PACKAGED,Manteiga,BLUE,2.80,717.0,Cartao,butter.png
+PACKAGED,Leite de amendoa,BLUE,2.45,25.0,Cartao,almond_milk.png
+PACKAGED,Ovos,RED,1.99,155.0,Cartao,eggs.png
+PACKAGED,Atum enlatado,RED,1.45,184.0,Metal,tuna.png
+PACKAGED,Fiambre,RED,2.30,120.0,Plastico,ham.png
+PACKAGED,Azeite,ORANGE,4.99,884.0,Vidro,olive_oil.png
+PACKAGED,Chocolate,ORANGE,2.20,546.0,Plastico,chocolate.png
+PACKAGED,Mel,ORANGE,5.50,304.0,Vidro,honey.png
+BULK,Brocolos,GREEN,1.20,34.0,-,broccoli.png
+BULK,Maca,GREEN,1.50,52.0,-,apple.png
+BULK,Cenoura,GREEN,0.90,41.0,-,carrot.png
+BULK,Laranja,GREEN,1.10,47.0,-,orange.png
+BULK,Alface,GREEN,0.80,15.0,-,lettuce.png
+BULK,Uvas,GREEN,2.20,69.0,-,grapes.png
+BULK,Banana,GREEN,1.30,89.0,-,banana.png
+BULK,Feijao,BROWN,1.80,333.0,-,beans.png
+BULK,Lentilhas,BROWN,2.20,116.0,-,lentils.png
+BULK,Graos,BROWN,2.40,364.0,-,chickpeas.png
+BULK,Salmao,RED,9.50,208.0,-,salmon.png
+BULK,Frango,RED,5.20,239.0,-,chicken.png
+BULK,Amendoins,ORANGE,3.50,567.0,-,peanut.png
+BULK,Nozes,ORANGE,8.90,654.0,-,walnuts.png
+PACKAGED,Biscoitos,PURPLE,1.50,420.0,Cartao,biscuits.png
+BULK,Peixe,GREEN,abc,100.0,-,salmon.png
+PACKAGED,Agua
+BULK,,GREEN,1.00,10.0,-,broccoli.png
+PACKAGED,Sopa,YELLOW,2.50,notanumber,Cartao,bread.png

@@ -1,0 +1,13 @@
+=== Smart Food Basket ===
+Data: 20260421
+
+Aveia                1 un.      2,10 EUR
+Massa                1 un.      0,99 EUR
+Massa                1 un.      0,99 EUR
+Massa                1 un.      0,99 EUR
+Massa                1 un.      0,99 EUR
+Cenoura              56564g    50,91 EUR
+
+GRANDE TOTAL: 56,97 EUR
+
+Meta ODS 3 Cumprida!

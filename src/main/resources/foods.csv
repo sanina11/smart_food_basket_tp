@@ -1,0 +1,10 @@
+PACKAGED,Arroz,YELLOW,1.89,350.0,Cartao,rice.png
+PACKAGED,Leite,BLUE,0.79,42.0,Plastico,milk.png
+PACKAGED,Queijo,BLUE,2.50,356.0,Plastico,cheese.png
+PACKAGED,Azeite,ORANGE,4.99,884.0,Vidro,olive_oil.png
+PACKAGED,Ovos,RED,1.99,155.0,Cartao,eggs.png
+BULK,Brocolos,GREEN,1.20,34.0,-,broccoli.png
+BULK,Maca,GREEN,1.50,52.0,-,apple.png
+BULK,Cenoura,GREEN,0.90,41.0,-,carrot.png
+BULK,Feijao,BROWN,1.80,333.0,-,beans.png
+BULK,Frango,RED,5.20,239.0,-,chicken.png
