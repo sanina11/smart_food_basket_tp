@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -21,7 +22,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 
 
-public class HelloApplication extends Application implements View {
+public class SmartFoodBasketApplication extends Application implements View {
 
     private Model model;
     private FlowPane grid;
@@ -61,6 +62,14 @@ public class HelloApplication extends Application implements View {
         root.setRight(this.sidebar);
 
         Scene scene = new Scene(root, 900, 600);
+        scene.setOnKeyPressed(e -> {
+            if (e.isControlDown() && e.getCode() == KeyCode.Z){
+                this.model.undo();
+            }
+            if (e.isControlDown() && e.getCode() == KeyCode.Y){
+                this.model.redo();
+            }
+        });
         stage.setTitle("Smart Food Basket — ODS Edition");
         stage.setScene(scene);
         stage.show();
@@ -91,7 +100,16 @@ public class HelloApplication extends Application implements View {
         this.basketList.setPrefHeight(300);
         this.basketList.setStyle("-fx-font-size: 12px;");
 
+        Button undoButton = new Button("Desfazer");
+        undoButton.setMaxWidth(Double.MAX_VALUE);
+        undoButton.setOnAction(e -> this.model.undo());
+
+        Button redoButton = new Button("Refazer");
+        redoButton.setMaxWidth(Double.MAX_VALUE);
+        redoButton.setOnAction(e -> this.model.redo());
+
         Button checkoutButton = this.createCheckoutButton();
+
 
         box.getChildren().addAll(
                 title,
@@ -99,6 +117,8 @@ public class HelloApplication extends Application implements View {
                 this.totalCaloriesLabel,
                 basketTitle,
                 this.basketList,
+                undoButton,
+                redoButton,
                 checkoutButton
         );
         return box;
