@@ -17,5 +17,4 @@ public enum FoodGroup {
     }
 
     public String getColor() { return this.color; }
-    public String getEmoji() { return this.emoji; }
 }

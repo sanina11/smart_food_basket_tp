@@ -96,11 +96,11 @@ public class Model {
     public void loadFromCsv(String path) throws IOException {
 
         BufferedReader reader = new BufferedReader(new FileReader(path));
-        String linha = reader.readLine();
+        String line = reader.readLine();
 
-        while (linha != null) {
+        while (line != null) {
             try {
-                String[] parts = linha.split(",");
+                String[] parts = line.split(",");
 
                 String type = parts[0];
                 String name = parts[1];
@@ -127,9 +127,9 @@ public class Model {
                     throw new IllegalArgumentException();
                 }
             } catch (Exception e) {
-                this.errorLines.add(linha);
+                this.errorLines.add(line);
             }
-            linha = reader.readLine();
+            line = reader.readLine();
         }
 
         reader.close();
