@@ -5,21 +5,21 @@ import app.model.BulkFood;
 import app.model.FoodItem;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
-import javafx.scene.control.TextInputDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Button;
 
 
 public class SmartFoodBasketApplication extends Application implements View {
@@ -61,6 +61,25 @@ public class SmartFoodBasketApplication extends Application implements View {
         root.setCenter(this.grid);
         root.setRight(this.sidebar);
 
+        Button buttonAll = new Button("Mostrar todos");
+        Button buttonVeg = new Button("Apenas vegetais");
+        Button buttonProt = new Button("Apenas proteínas");
+
+        ComboBox<String> sortBox = new ComboBox<>();
+        sortBox.getItems().addAll("Ordenar por preço (menor a maior)", "Ordenar por calorias (maior a menor)");
+        sortBox.setPromptText("Ordenar por...");
+        sortBox.setOnAction(e -> this.applySort(sortBox.getValue()));
+
+        HBox filterBox = new HBox(10, buttonAll, buttonVeg, buttonProt,sortBox);
+        filterBox.setPadding(new javafx.geometry.Insets(10));
+
+        VBox centerArea = new VBox(filterBox, this.grid);
+        root.setCenter(centerArea);
+
+        buttonAll.setOnAction(e -> this.applyFilter("All"));
+        buttonVeg.setOnAction(e -> this.applyFilter("GREEN"));
+        buttonProt.setOnAction(e -> this.applyFilter("RED"));
+
         Scene scene = new Scene(root, 900, 600);
         scene.setOnKeyPressed(e -> {
             if (e.isControlDown() && e.getCode() == KeyCode.Z){
@@ -70,7 +89,7 @@ public class SmartFoodBasketApplication extends Application implements View {
                 this.model.redo();
             }
         });
-        stage.setTitle("Smart Food Basket — ODS Edition");
+        stage.setTitle("Smart Food Basket");
         stage.setScene(scene);
         stage.show();
 
@@ -79,6 +98,28 @@ public class SmartFoodBasketApplication extends Application implements View {
         }
 
         this.updateView();
+    }
+
+    private void applyFilter(String filter){
+        this.grid.getChildren().clear();
+        for (FoodItem item : this.model.getCatalog()) {
+            if(filter.equals("All") || item.getGroup().name().equals(filter)){
+                this.grid.getChildren().add(this.createTile(item));
+            }
+        }
+    }
+
+    private void applySort(String sort){
+        List<FoodItem> sorted = new ArrayList<>(this.model.getCatalog());
+        if (sort.equals("Ordenar por preço (menor a maior)")) {
+            sorted.sort((a, b) -> Double.compare(a.getBasePrice(), b.getBasePrice()));
+        } else {
+            sorted.sort((a, b) -> Double.compare(b.getBaseCalories(), a.getBaseCalories()));
+        }
+        this.grid.getChildren().clear();
+        for (FoodItem item : sorted) {
+            this.grid.getChildren().add(this.createTile(item));
+        }
     }
 
     private VBox createSidebar() {
@@ -201,7 +242,10 @@ public class SmartFoodBasketApplication extends Application implements View {
         Label price = new Label(String.format("%.2f %s", item.getBasePrice(), item.getUnitLabel()));
         price.setStyle("-fx-font-size: 10px; -fx-text-fill: #555;");
 
-        tile.getChildren().addAll(imageView, name, price);
+        Label calories = new Label(String.format("%.0f kcal", item.getBaseCalories()));
+        calories.setStyle("-fx-font-size: 10px; -fx-text-fill: #888;");
+
+        tile.getChildren().addAll(imageView, name, price,calories);
 
         tile.setOnMouseClicked(e -> this.handleTileClick(item));
 
