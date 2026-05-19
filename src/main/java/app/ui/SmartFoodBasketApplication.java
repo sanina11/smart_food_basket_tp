@@ -3,6 +3,7 @@ package app.ui;
 import app.model.Model;
 import app.model.BulkFood;
 import app.model.FoodItem;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,6 +21,10 @@ import java.util.Optional;
 import java.io.IOException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 public class SmartFoodBasketApplication extends Application implements View {
@@ -247,17 +252,34 @@ public class SmartFoodBasketApplication extends Application implements View {
 
         tile.getChildren().addAll(imageView, name, price,calories);
 
-        tile.setOnMouseClicked(e -> this.handleTileClick(item));
-
+        tile.setOnMouseClicked(e -> {
+            ScaleTransition scale = new ScaleTransition(Duration.millis(150), tile);
+            scale.setFromX(1.0);
+            scale.setToX(1.1);
+            scale.setFromY(1.0);
+            scale.setToY(1.1);
+            scale.setCycleCount(2);
+            scale.setAutoReverse(true);
+            scale.play();
+            this.handleTileClick(item);
+        });
         return tile;
     }
 
     private void handleTileClick(FoodItem item) {
+        this.playSound();
         if (item.getUnitLabel().equals("€/un.")) {
             this.model.addItem(item);
             return;
         }
         this.askWeightAndAdd(item);
+    }
+
+    private void playSound(){
+        String path = getClass().getResource("/Sounds/cashRegister.mp3").toExternalForm();
+        Media media = new Media(path);
+        MediaPlayer player = new MediaPlayer(media);
+        player.play();
     }
 
     private void askWeightAndAdd(FoodItem item) {
